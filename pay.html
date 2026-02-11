@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Ruler — Unlock Premium</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=AdOyi2t8GLyoB4KomlkMr4iVV7OLlyqDpWmcsezsnKvVjN8ShrcGGybiFABgcktr7igR5lKV5ojBL4AQ&currency=USD"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 90%;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(135deg, #007acc, #4fc3f7);
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+    .card-header h1 { font-size: 22px; margin-bottom: 4px; }
+    .card-header p { font-size: 14px; opacity: 0.9; }
+    .card-body { padding: 24px; }
+    .features {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+    .features li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #333;
+    }
+    .features li:last-child { border-bottom: none; }
+    .features li::before {
+      content: '\2713';
+      color: #10b981;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    .price-tag {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .price-tag .amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: #007acc;
+    }
+    .price-tag .label {
+      font-size: 13px;
+      color: #888;
+    }
+    #paypal-button-container {
+      min-height: 50px;
+    }
+    .secure-note {
+      text-align: center;
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 12px;
+    }
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .success-message .icon { font-size: 60px; margin-bottom: 16px; }
+    .success-message h2 { color: #10b981; margin-bottom: 8px; }
+    .success-message p { color: #666; font-size: 14px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h1>&#x1F4CF; Pixel Ruler Premium</h1>
+      <p>One-time payment &mdash; lifetime access</p>
+    </div>
+
+    <div class="card-body" id="paymentSection">
+      <ul class="features">
+        <li>Alignment Guides</li>
+        <li>Background Grid</li>
+        <li>Measure Mode</li>
+        <li>Custom Colors</li>
+        <li>Keyboard Shortcuts</li>
+      </ul>
+
+      <div class="price-tag">
+        <div class="amount">$1.00</div>
+        <div class="label">One-time payment</div>
+      </div>
+
+      <div id="paypal-button-container"></div>
+      <p class="secure-note">&#x1F512; Secure payment via PayPal</p>
+    </div>
+
+    <div class="success-message" id="successSection">
+      <div class="icon">&#x1F389;</div>
+      <h2>Premium Unlocked!</h2>
+      <p>All features are now available.<br>You can close this tab and return to the extension.</p>
+    </div>
+  </div>
+
+  <script>
+    const VERIFY_URL = 'https://rulerguide.netlify.app/.netlify/functions/verify';
+
+    paypal.Buttons({
+      style: {
+        layout: 'vertical',
+        color: 'blue',
+        shape: 'rect',
+        label: 'pay',
+        height: 45
+      },
+
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            description: 'Pixel Ruler Premium Unlock',
+            amount: { currency_code: 'USD', value: '1.00' }
+          }]
+        });
+      },
+
+      onApprove: async function(data, actions) {
+        try {
+          const orderData = await actions.order.capture();
+
+          // Verify on server
+          const res = await fetch(VERIFY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderID: orderData.id })
+          });
+          const result = await res.json();
+
+          if (result.verified) {
+            // Show success UI
+            document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('successSection').style.display = 'block';
+
+            // Notify the extension via URL hash (background.js detects this)
+            window.location.hash = '#payment-success';
+          } else {
+            alert('Payment could not be verified. Please contact support.');
+          }
+        } catch (err) {
+          alert('Payment error: ' + err.message);
+        }
+      },
+
+      onError: function(err) {
+        alert('PayPal error. Please try again.');
+      }
+    }).render('#paypal-button-container');
+  </script>
+</body>
+</html>
