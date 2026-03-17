@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extension Products</title>
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #0b63ce;
+      --accent: #0f9d74;
+      --border: #dbe4f5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, #f9fbff 100%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(8, 32, 74, 0.08);
+      margin-top: 24px;
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    p { margin: 0; line-height: 1.55; color: var(--muted); }
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .card h2 { margin: 0 0 8px; font-size: 20px; }
+    .meta { margin: 10px 0; font-size: 14px; color: var(--muted); }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    footer {
+      margin: 20px 0 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Chrome Extension Products</h1>
+      <p>This page lists all products and policy links used for verification and customer transparency.</p>
+      <div class="grid">
+        <article class="card">
+          <h2>Pixel Ruler Premium</h2>
+          <p>On-screen rulers, alignment guides, and measurement tools for web designers and developers.</p>
+          <div class="meta">One-time payment. Lifetime access.</div>
+          <a class="btn" href="pixel-ruler/">Open Product Website</a>
+        </article>
+        <article class="card">
+          <h2>Advanced Smart Capture Premium</h2>
+          <p>Full-page capture, selection capture, element capture, OCR, and annotation tools.</p>
+          <div class="meta">One-time payment. Lifetime access.</div>
+          <a class="btn" href="advanced-smart-capture/">Open Product Website</a>
+        </article>
+      </div>
+    </section>
+    <footer>
+      Business support: support@example.com
+    </footer>
+  </main>
+</body>
+</html>

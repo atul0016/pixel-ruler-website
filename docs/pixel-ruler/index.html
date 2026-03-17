@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Ruler Premium</title>
+  <style>
+    :root {
+      --bg: #f7fbff;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --brand: #0a67d0;
+      --brand2: #0aa57d;
+      --border: #dce7fb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 90% -10%, #e6f0ff 0%, #f9fbff 45%, #ffffff 100%);
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 24px; }
+    .hero {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+    }
+    h1 { margin: 0 0 8px; font-size: 34px; }
+    .subtitle { color: var(--muted); margin: 0 0 16px; line-height: 1.55; }
+    .badge {
+      display: inline-block;
+      border: 1px solid #b8d7ff;
+      color: #0a4f9a;
+      background: #eaf3ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .cta {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand), #25a2ff);
+      border-radius: 9px;
+      padding: 12px 16px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    .cta.secondary { background: linear-gradient(135deg, var(--brand2), #25c393); }
+    .grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    h2 { margin: 4px 0 10px; font-size: 20px; }
+    ul { margin: 0; padding-left: 18px; }
+    li { margin: 7px 0; }
+    .muted { color: var(--muted); }
+    .footer {
+      margin: 18px 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .links a { color: var(--brand); margin-right: 12px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="badge">Professional Chrome Extension</div>
+      <h1>Pixel Ruler Premium</h1>
+      <p class="subtitle">Pixel Ruler Premium helps designers and developers measure layout spacing, verify alignment, and maintain visual consistency with on-screen rulers, guides, and measurement tools.</p>
+      <a class="cta" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Install from Chrome Web Store</a>
+      <a class="cta secondary" href="https://rulerguide.netlify.app/pay.html?ext=pixel-ruler" target="_blank" rel="noopener">Premium Checkout</a>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Product Details</h2>
+        <ul>
+          <li>Product name: Pixel Ruler Premium</li>
+          <li>Category: Web design and developer utility</li>
+          <li>License model: One-time payment, lifetime access</li>
+          <li>Intended users: Designers, frontend developers, QA teams</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Key Features</h2>
+        <ul>
+          <li>Precise horizontal and vertical rulers</li>
+          <li>Draggable alignment guides for layout checks</li>
+          <li>Distance measurement mode between page elements</li>
+          <li>Custom colors and visual preferences</li>
+          <li>Keyboard shortcuts for faster workflow</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Pricing</h2>
+        <ul>
+          <li>India: INR 99 one-time</li>
+          <li>International: USD 1.00 one-time</li>
+          <li>No recurring subscription</li>
+          <li>Payment gateways: Razorpay and PayPal</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Support and Contact</h2>
+        <ul>
+          <li>Support email: support@example.com</li>
+          <li>Typical response time: within 48 hours</li>
+          <li>Region support: India and international</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:14px;">
+      <h2>Legal and Policies</h2>
+      <p class="muted">These policy pages are provided for user transparency and payment compliance.</p>
+      <p class="links" style="margin-top:10px;">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="refund-policy.html">Refund and Cancellation Policy</a>
+      </p>
+    </section>
+
+    <p class="footer">Copyright 2026 Pixel Ruler Premium. All rights reserved.</p>
+  </main>
+</body>
+</html>
