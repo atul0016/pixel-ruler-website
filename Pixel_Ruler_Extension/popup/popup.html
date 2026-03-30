@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Ruler + Alignment Checker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 3h18v18H3zM3 9h18M9 3v18"/>
+        </svg>
+        <h1>Pixel Ruler</h1>
+      </div>
+      <div class="header-right">
+        <button id="howToUseBtn" class="how-to-use-btn" title="How to Use">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <circle cx="12" cy="17" r=".5"/>
+          </svg>
+        </button>
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot"></span>
+          <span id="statusText">Inactive</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Controls -->
+    <section class="main-controls">
+      <button id="toggleBtn" class="primary-btn toggle-btn">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>Activate Rulers</span>
+      </button>
+    </section>
+
+    <!-- Feature Controls -->
+    <section class="feature-controls">
+      <div class="control-group">
+        <h3>Display Options</h3>
+        
+        <div class="toggle-item">
+          <label class="toggle-label">
+            <input type="checkbox" id="rulersToggle">
+            <span class="toggle-switch"></span>
+            <div class="toggle-content">
+              <span class="toggle-title">Rulers</span>
+              <span class="toggle-desc">Show pixel rulers on edges</span>
+            </div>
+          </label>
+          <div class="shortcut">Ctrl+Shift+R</div>
+        </div>
+
+        <div class="toggle-item premium-feature" data-feature="guides">
+          <label class="toggle-label">
+            <input type="checkbox" id="guidesToggle" checked>
+            <span class="toggle-switch"></span>
+            <div class="toggle-content">
+              <span class="toggle-title">Guides <span class="pro-badge">PRO</span></span>
+              <span class="toggle-desc">Show alignment guides</span>
+            </div>
+          </label>
+          <div class="shortcut">Ctrl+Shift+G</div>
+        </div>
+
+        <div class="toggle-item premium-feature" data-feature="grid">
+          <label class="toggle-label">
+            <input type="checkbox" id="gridToggle">
+            <span class="toggle-switch"></span>
+            <div class="toggle-content">
+              <span class="toggle-title">Grid <span class="pro-badge">PRO</span></span>
+              <span class="toggle-desc">Show background grid</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Tools</h3>
+        
+        <div class="toggle-item premium-feature" data-feature="measure">
+          <label class="toggle-label">
+            <input type="checkbox" id="measureToggle">
+            <span class="toggle-switch"></span>
+            <div class="toggle-content">
+              <span class="toggle-title">Measure Mode <span class="pro-badge">PRO</span></span>
+              <span class="toggle-desc">Click and drag to measure</span>
+            </div>
+          </label>
+          <div class="shortcut">Ctrl+M</div>
+        </div>
+
+        <button id="clearGuidesBtn" class="action-btn">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3,6 5,6 21,6"/>
+            <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
+          </svg>
+          Clear All Guides
+        </button>
+      </div>
+    </section>
+
+    <!-- Quick Help -->
+    <section class="help-section">
+      <details class="help-details">
+        <summary class="help-summary">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <circle cx="12" cy="17" r=".5"/>
+          </svg>
+          Quick Help
+        </summary>
+        <div class="help-content">
+          <div class="help-item">
+            <strong>Create Guides:</strong> Double-click anywhere on the page
+          </div>
+          <div class="help-item">
+            <strong>Vertical Guide:</strong> Shift+double-click or Ctrl+V then double-click
+          </div>
+          <div class="help-item">
+            <strong>Horizontal Guide:</strong> Alt+double-click or Ctrl+H then double-click
+          </div>
+          <div class="help-item">
+            <strong>Move Guides:</strong> Drag the guide lines
+          </div>
+          <div class="help-item">
+            <strong>Delete Guide:</strong> Right-click on a guide line
+          </div>
+          <div class="help-item">
+            <strong>Measure:</strong> Enable measure mode, then click and drag
+          </div>
+          <div class="help-item">
+            <strong>Toggle:</strong> Use keyboard shortcuts for quick access
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Settings -->
+    <section class="settings-section">
+      <details class="settings-details">
+        <summary class="settings-summary">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+          </svg>
+          Settings
+        </summary>
+        <div class="settings-content">
+          <div class="setting-item">
+            <label for="gridSize">Grid Size</label>
+            <select id="gridSize">
+              <option value="5">5px</option>
+              <option value="10" selected>10px</option>
+              <option value="20">20px</option>
+              <option value="25">25px</option>
+            </select>
+          </div>
+          
+          <div class="setting-item">
+            <label for="rulerColor">Ruler Color</label>
+            <input type="color" id="rulerColor" value="#007acc">
+          </div>
+          
+          <div class="setting-item">
+            <label for="guideColor">Guide Color</label>
+            <input type="color" id="guideColor" value="#ff6b35">
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Premium Section (shown when NOT premium) -->
+    <section class="premium-section" id="premiumSection">
+      <div class="premium-banner">
+        <div class="premium-icon">&#x1F451;</div>
+        <div class="premium-text">
+          <strong>Unlock Premium</strong>
+          <span>Guides, Grid, Measure & more for just $1.00</span>
+        </div>
+        <button id="upgradeBtn" class="upgrade-btn">Upgrade</button>
+      </div>
+    </section>
+
+    <!-- Premium Active Section (shown when premium IS active) -->
+    <section class="premium-active-section" id="premiumActiveSection" style="display:none;">
+      <div class="premium-active-banner">
+        <span class="premium-active-icon">&#x2705;</span>
+        <span>Premium Active — All features unlocked!</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="version">v1.0.0</div>
+      <div class="links">
+        <a href="#" id="helpLink">Help</a>
+        <span>•</span>
+        <a href="#" id="feedbackLink">Feedback</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

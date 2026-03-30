@@ -1,41 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Chrome Extensions</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
-        h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .extension-card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #f9f9f9; }
-        .extension-card h2 { margin-top: 0; color: #007bff; }
-        .links { margin-top: 15px; }
-        a { color: #007bff; text-decoration: none; font-weight: bold; margin-right: 15px; }
-        a:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome Extensions by Atul | Pixel Ruler • Smart Capture</title>
+  <meta name="description" content="Free & premium Chrome extensions for developers and designers. Pixel Ruler for precise measurements. Smart Capture for screenshots, OCR & annotations.">
+  <meta name="keywords" content="chrome extension, pixel ruler, smart capture, screenshot, OCR, web developer tools, design tools">
+  <meta name="author" content="Atul">
+  <meta property="og:title" content="Chrome Extensions by Atul">
+  <meta property="og:description" content="Precision tools for developers and designers. Pixel Ruler for measurements. Smart Capture for screenshots & OCR.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>My Chrome Extensions</h1>
-    <p>Welcome! Here you can find information and privacy policies for my browser extensions.</p>
+  <!-- Ambient Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
 
-    <div class="extension-card">
-        <h2>🛠️ Pixel Ruler</h2>
-        <p>A precision on-screen ruler tool designed for developers and designers to measure elements accurately across any webpage.</p>
-        <div class="links">
-            <a href="pixel-ruler-privacy.html">Privacy Policy</a>
-            <a href="mailto:support@example.com">Contact Support</a>
-        </div>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <span class="logo-icon">⚡</span>
+        <span>Atul's Extensions</span>
+      </a>
+      <ul class="navbar-links">
+        <li><a href="#extensions">Extensions</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="https://github.com/atul0016" target="_blank" rel="noopener" class="nav-cta">GitHub →</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <div class="extension-card">
-        <h2>📸 Smart Capture</h2>
-        <p>An advanced screenshot and screen recording tool. Capture visible areas, full pages, or exact selections effortlessly.</p>
-        <div class="links">
-            <a href="smart-capture-privacy.html">Privacy Policy</a>
-            <a href="mailto:support@example.com">Contact Support</a>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Made for Developers & Designers
+      </div>
+      <h1>Chrome Extensions<br>Built with <span class="gradient-text">Precision</span></h1>
+      <p>Professional tools that boost your workflow. No tracking, no bloat — just powerful features that work locally in your browser.</p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="number">2</div>
+          <div class="label">Extensions</div>
         </div>
+        <div class="hero-stat">
+          <div class="number">MV3</div>
+          <div class="label">Manifest V3</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">0</div>
+          <div class="label">Data Collected</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">∞</div>
+          <div class="label">Lifetime Access</div>
+        </div>
+      </div>
     </div>
+  </section>
 
+  <!-- Extensions -->
+  <section class="section" id="extensions">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Extensions</h2>
+        <p>Each extension is crafted for speed, privacy, and a seamless developer experience.</p>
+      </div>
+
+      <div class="extensions-grid">
+        <!-- Pixel Ruler Card -->
+        <div class="ext-card" id="pixel-ruler-card">
+          <div class="ext-card-visual">
+            <div class="visual-gradient" style="background: linear-gradient(135deg, #1e3a5f, #0d47a1, #1565c0);"></div>
+            <div class="visual-icon">📏</div>
+          </div>
+          <div class="ext-card-body">
+            <h3>Pixel Ruler + Alignment Checker</h3>
+            <p class="ext-desc">Precision on-screen rulers, draggable alignment guides, and measurement tools for pixel-perfect web design.</p>
+            <div class="ext-tags">
+              <span class="ext-tag">Rulers</span>
+              <span class="ext-tag">Guides</span>
+              <span class="ext-tag">Measure</span>
+              <span class="ext-tag">Grid</span>
+              <span class="ext-tag">Shortcuts</span>
+            </div>
+            <div class="ext-card-actions">
+              <a href="pixel-ruler/" class="btn btn-primary">Learn More →</a>
+              <a href="pixel-ruler/privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Capture Card -->
+        <div class="ext-card" id="smart-capture-card">
+          <div class="ext-card-visual">
+            <div class="visual-gradient" style="background: linear-gradient(135deg, #4a1942, #7b1fa2, #9c27b0);"></div>
+            <div class="visual-icon">📸</div>
+          </div>
+          <div class="ext-card-body">
+            <h3>Advanced Smart Capture</h3>
+            <p class="ext-desc">Full-page screenshots, region capture, OCR text extraction, annotations, PDF export & scheduled captures.</p>
+            <div class="ext-tags">
+              <span class="ext-tag">Screenshot</span>
+              <span class="ext-tag">OCR</span>
+              <span class="ext-tag">Annotate</span>
+              <span class="ext-tag">PDF Export</span>
+              <span class="ext-tag">History</span>
+            </div>
+            <div class="ext-card-actions">
+              <a href="smart-capture/" class="btn btn-primary">Learn More →</a>
+              <a href="smart-capture/privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features" style="background: rgba(17, 24, 39, 0.4);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose Our Extensions?</h2>
+        <p>Built with modern web standards and a privacy-first approach</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(99, 102, 241, 0.1); color: #818cf8;">🔒</div>
+          <h3>Privacy First</h3>
+          <p>Zero data collection. Everything runs locally in your browser. No analytics, no tracking, ever.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: #34d399;">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Built on Manifest V3 with optimized service workers for minimal memory and CPU usage.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24;">💎</div>
+          <h3>One-Time Payment</h3>
+          <p>No subscriptions. Pay once, unlock premium forever. Works across all your devices with sync.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(236, 72, 153, 0.1); color: #f472b6;">🌍</div>
+          <h3>Global Payments</h3>
+          <p>PayPal for international users. Razorpay with UPI, cards & netbanking for India.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(59, 130, 246, 0.1); color: #60a5fa;">🛡️</div>
+          <h3>Secure Payments</h3>
+          <p>No payment data stored. Backend verification via encrypted serverless functions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(139, 92, 246, 0.1); color: #a78bfa;">🔧</div>
+          <h3>Developer Friendly</h3>
+          <p>Open source extensions. Keyboard shortcuts, customizable settings, and clean architecture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Banner -->
+  <section class="privacy-banner" id="privacy">
+    <div class="container">
+      <div class="privacy-banner-inner">
+        <div class="privacy-banner-icon">🔐</div>
+        <div class="privacy-banner-text">
+          <h3>Your Privacy Matters</h3>
+          <p>All our extensions operate entirely on your local machine. We don't collect, store, or transmit any personal data, browsing history, or usage analytics. Read our full privacy policies below.</p>
+          <div class="privacy-links">
+            <a href="pixel-ruler/privacy-policy.html">📏 Pixel Ruler Privacy →</a>
+            <a href="smart-capture/privacy-policy.html">📸 Smart Capture Privacy →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          ⚡ Atul's Chrome Extensions — Built with care.
+        </div>
+        <ul class="footer-links">
+          <li><a href="pixel-ruler/privacy-policy.html">Pixel Ruler Privacy</a></li>
+          <li><a href="smart-capture/privacy-policy.html">Smart Capture Privacy</a></li>
+          <li><a href="pixel-ruler/terms-of-service.html">Terms</a></li>
+          <li><a href="https://github.com/atul0016" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Animation Observer -->
+  <script>
+    // Animate cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.ext-card, .feature-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      observer.observe(el);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(10, 14, 23, 0.95)';
+      } else {
+        navbar.style.background = 'rgba(10, 14, 23, 0.8)';
+      }
+    });
+  </script>
 </body>
 </html>

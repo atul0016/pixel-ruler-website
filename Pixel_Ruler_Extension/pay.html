@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unlock Premium</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(180deg, #eef5ff, #f7fafc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #1f2937;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      max-width: 460px;
+      width: 92%;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    .card-header {
+      background: linear-gradient(135deg, #0066cc, #19a0ff);
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+    .card-header h1 { font-size: 22px; margin-bottom: 6px; }
+    .card-header p { font-size: 13px; opacity: 0.95; }
+    .card-body { padding: 24px; }
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+      background: #e6f7ff;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      margin-bottom: 14px;
+    }
+    .features {
+      list-style: none;
+      margin-bottom: 18px;
+    }
+    .features li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
+    }
+    .features li:last-child { border-bottom: none; }
+    .features li::before {
+      content: '✓';
+      color: #10b981;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    .price-tag {
+      text-align: center;
+      margin: 6px 0 20px;
+    }
+    .price-tag .amount {
+      font-size: 34px;
+      font-weight: 800;
+      color: #0369a1;
+      letter-spacing: -0.5px;
+    }
+    .price-tag .label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 3px;
+    }
+    .gateway-section {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+    .gateway-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.08s ease, opacity 0.2s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-razorpay {
+      background: #0f172a;
+      color: #fff;
+    }
+    .muted {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 8px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    #paypal-button-container {
+      min-height: 46px;
+    }
+    .hidden { display: none !important; }
+    .error {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #b91c1c;
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 9px 10px;
+    }
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .success-message .icon { font-size: 56px; margin-bottom: 14px; }
+    .success-message h2 { color: #059669; margin-bottom: 8px; }
+    .success-message p { color: #4b5563; font-size: 14px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h1 id="productTitle">Premium Unlock</h1>
+      <p>One-time payment. Lifetime access.</p>
+    </div>
+
+    <div class="card-body" id="paymentSection">
+      <div class="chip" id="regionHint">Detecting best payment method...</div>
+
+      <ul class="features" id="featureList">
+        <li>Premium features unlocked</li>
+        <li>One-time payment</li>
+        <li>No recurring subscription</li>
+      </ul>
+
+      <div class="price-tag">
+        <div class="amount" id="priceText">$1.00</div>
+        <div class="label">One-time payment</div>
+      </div>
+
+      <div id="razorpaySection" class="gateway-section hidden">
+        <div class="gateway-title">Pay in India (UPI, Card, Netbanking)</div>
+        <button id="razorpayBtn" class="btn btn-razorpay">Pay Securely with Razorpay</button>
+      </div>
+
+      <div id="paypalSection" class="gateway-section hidden">
+        <div class="gateway-title">International checkout</div>
+        <div id="paypal-button-container"></div>
+      </div>
+
+      <div id="errorBox" class="error hidden"></div>
+      <p class="muted">Your secret keys are never stored in extension code. Verification runs on your backend.</p>
+    </div>
+
+    <div class="success-message" id="successSection">
+      <div class="icon">🎉</div>
+      <h2>Premium Unlocked!</h2>
+      <p>Activation completed successfully.<br>You can close this tab and return to the extension.</p>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'https://rulerguide.netlify.app/.netlify/functions';
+    const qs = new URLSearchParams(window.location.search);
+    const EXTENSION = qs.get('ext') || 'pixel-ruler';
+    const INSTALL_ID = qs.get('installId') || '';
+
+    const PRODUCT_MAP = {
+      'pixel-ruler': {
+        title: '📏 Pixel Ruler Premium',
+        features: ['Alignment Guides', 'Background Grid', 'Measure Mode', 'Custom Colors', 'Keyboard Shortcuts'],
+        fallbackUsd: '1.00',
+        fallbackInr: '99'
+      },
+      'smart-capture': {
+        title: '📸 Advanced Smart Capture Premium',
+        features: ['Selection + Element Capture', 'OCR + Annotation Tools', 'High-quality export options', 'History and premium controls', 'One-time lifetime unlock'],
+        fallbackUsd: '1.00',
+        fallbackInr: '99'
+      }
+    };
+
+    const product = PRODUCT_MAP[EXTENSION] || PRODUCT_MAP['pixel-ruler'];
+
+    const els = {
+      title: document.getElementById('productTitle'),
+      featureList: document.getElementById('featureList'),
+      priceText: document.getElementById('priceText'),
+      regionHint: document.getElementById('regionHint'),
+      razorpaySection: document.getElementById('razorpaySection'),
+      paypalSection: document.getElementById('paypalSection'),
+      razorpayBtn: document.getElementById('razorpayBtn'),
+      errorBox: document.getElementById('errorBox'),
+      paymentSection: document.getElementById('paymentSection'),
+      successSection: document.getElementById('successSection')
+    };
+
+    function showError(message) {
+      els.errorBox.textContent = message;
+      els.errorBox.classList.remove('hidden');
+    }
+
+    function clearError() {
+      els.errorBox.classList.add('hidden');
+      els.errorBox.textContent = '';
+    }
+
+    function setProductUI() {
+      els.title.textContent = product.title;
+      els.featureList.innerHTML = product.features.map((f) => `<li>${f}</li>`).join('');
+    }
+
+    async function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = () => reject(new Error(`Failed loading ${src}`));
+        document.head.appendChild(s);
+      });
+    }
+
+    function isLikelyIndiaUser() {
+      const lang = (navigator.language || '').toLowerCase();
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      return lang.endsWith('-in') || tz.includes('Kolkata');
+    }
+
+    async function fetchPaymentConfig() {
+      const url = `${API_BASE}/payment-config?ext=${encodeURIComponent(EXTENSION)}&installId=${encodeURIComponent(INSTALL_ID)}`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error('Failed to fetch payment config from backend.');
+      }
+      return await res.json();
+    }
+
+    async function createOrder(gateway, config) {
+      const res = await fetch(`${API_BASE}/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gateway,
+          ext: EXTENSION,
+          installId: INSTALL_ID,
+          amountInr: config.amountInr,
+          amountUsd: config.amountUsd
+        })
+      });
+      if (!res.ok) throw new Error('Could not create payment order.');
+      return await res.json();
+    }
+
+    async function verifyPayment(gateway, payload) {
+      const endpoint = gateway === 'razorpay' ? 'verify-razorpay' : 'verify-paypal';
+      const res = await fetch(`${API_BASE}/${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ext: EXTENSION,
+          installId: INSTALL_ID,
+          ...payload
+        })
+      });
+      if (!res.ok) throw new Error('Server verification failed.');
+      return await res.json();
+    }
+
+    function notifyExtensionSuccess(verificationResult) {
+      const token = verificationResult.activationToken || '';
+      const hashParams = new URLSearchParams();
+      hashParams.set('ext', EXTENSION);
+      if (token) hashParams.set('token', token);
+      window.location.hash = `payment-success&${hashParams.toString()}`;
+    }
+
+    function showSuccess(verificationResult) {
+      els.paymentSection.style.display = 'none';
+      els.successSection.style.display = 'block';
+      notifyExtensionSuccess(verificationResult);
+    }
+
+    async function initRazorpay(config) {
+      if (!config.razorpayKeyId) return false;
+      await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+      els.razorpaySection.classList.remove('hidden');
+      els.razorpayBtn.addEventListener('click', async () => {
+        try {
+          clearError();
+          const order = await createOrder('razorpay', config);
+          const rz = new Razorpay({
+            key: config.razorpayKeyId,
+            amount: order.amount,
+            currency: order.currency || 'INR',
+            name: config.businessName || 'Premium Unlock',
+            description: `${EXTENSION} lifetime premium`,
+            order_id: order.orderId,
+            handler: async function (response) {
+              const verify = await verifyPayment('razorpay', {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              });
+              if (verify.verified) {
+                showSuccess(verify);
+              } else {
+                showError('Payment received but verification failed. Please contact support.');
+              }
+            },
+            theme: { color: '#0066cc' }
+          });
+          rz.open();
+        } catch (err) {
+          showError(err.message || 'Razorpay checkout failed.');
+        }
+      });
+      return true;
+    }
+
+    async function initPaypal(config) {
+      if (!config.paypalClientId) return false;
+      await loadScript(`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(config.paypalClientId)}&currency=USD`);
+      els.paypalSection.classList.remove('hidden');
+
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'pay',
+          height: 44
+        },
+        createOrder: async function () {
+          const order = await createOrder('paypal', config);
+          return order.orderId;
+        },
+        onApprove: async function (data, actions) {
+          try {
+            clearError();
+            const capture = await actions.order.capture();
+            const verify = await verifyPayment('paypal', {
+              orderID: data.orderID,
+              captureID: capture?.purchase_units?.[0]?.payments?.captures?.[0]?.id || null
+            });
+            if (verify.verified) {
+              showSuccess(verify);
+            } else {
+              showError('Payment could not be verified. Please contact support.');
+            }
+          } catch (err) {
+            showError(err.message || 'PayPal payment failed.');
+          }
+        },
+        onError: function () {
+          showError('PayPal checkout failed. Please try again.');
+        }
+      }).render('#paypal-button-container');
+
+      return true;
+    }
+
+    async function init() {
+      setProductUI();
+
+      if (!INSTALL_ID) {
+        showError('Missing install identifier from extension. Please re-open checkout from extension popup.');
+        return;
+      }
+
+      try {
+        const config = await fetchPaymentConfig();
+        const indiaFirst = config.countryCode === 'IN' || isLikelyIndiaUser();
+        const amountInr = config.amountInr || product.fallbackInr;
+        const amountUsd = config.amountUsd || product.fallbackUsd;
+
+        els.priceText.textContent = indiaFirst ? `₹${amountInr}` : `$${amountUsd}`;
+        els.regionHint.textContent = indiaFirst
+          ? 'Detected India: Razorpay is shown first for fastest UPI checkout.'
+          : 'International checkout detected: PayPal is shown first.';
+
+        const razorpayReady = await initRazorpay(config);
+        const paypalReady = await initPaypal(config);
+
+        if (!razorpayReady && !paypalReady) {
+          showError('No payment gateway is configured yet. Please configure backend keys first.');
+          return;
+        }
+
+        if (indiaFirst) {
+          if (razorpayReady) {
+            els.razorpaySection.classList.remove('hidden');
+          }
+          if (paypalReady) {
+            els.paypalSection.classList.remove('hidden');
+          }
+        } else {
+          if (paypalReady) {
+            els.paypalSection.classList.remove('hidden');
+          }
+          if (razorpayReady) {
+            els.razorpaySection.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        showError(err.message || 'Unable to initialize payment options.');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
+

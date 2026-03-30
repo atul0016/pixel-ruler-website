@@ -1,0 +1,392 @@
+/**
+ * Pixel Ruler + Alignment Checker - Styles
+ */
+
+/* Main container */
+.pixel-ruler-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2147483647; /* Maximum z-index to appear above everything */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* Horizontal Ruler */
+.pixel-ruler.horizontal-ruler {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #007acc;
+  z-index: 2147483647;
+  pointer-events: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Vertical Ruler */
+.pixel-ruler.vertical-ruler {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid #007acc;
+  z-index: 2147483647;
+  pointer-events: auto;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Ruler marks */
+.pixel-ruler .ruler-mark {
+  position: absolute;
+  background: #666;
+  pointer-events: none;
+}
+
+/* Horizontal ruler marks */
+.horizontal-ruler .ruler-mark {
+  width: 1px;
+  height: 4px;
+  bottom: 0;
+}
+
+.horizontal-ruler .ruler-mark.major {
+  height: 8px;
+  background: #333;
+}
+
+.horizontal-ruler .ruler-mark.minor {
+  height: 12px;
+  background: #007acc;
+}
+
+.horizontal-ruler .ruler-mark.minor::after {
+  content: attr(--label);
+  position: absolute;
+  bottom: 13px;
+  left: 2px;
+  font-size: 9px;
+  color: #333;
+  white-space: nowrap;
+  transform: rotate(0deg);
+}
+
+/* Vertical ruler marks */
+.vertical-ruler .ruler-mark {
+  height: 1px;
+  width: 4px;
+  right: 0;
+}
+
+.vertical-ruler .ruler-mark.major {
+  width: 8px;
+  background: #333;
+}
+
+.vertical-ruler .ruler-mark.minor {
+  width: 12px;
+  background: #007acc;
+}
+
+.vertical-ruler .ruler-mark.minor::after {
+  content: attr(--label);
+  position: absolute;
+  right: 13px;
+  top: -5px;
+  font-size: 9px;
+  color: #333;
+  white-space: nowrap;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+/* Alignment Guides */
+.pixel-ruler.alignment-guide {
+  position: absolute;
+  background: #ff6b35;
+  z-index: 2147483646;
+  pointer-events: auto;
+  cursor: move;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.pixel-ruler.alignment-guide:hover {
+  opacity: 1;
+  background: #ff4500;
+}
+
+.pixel-ruler.alignment-guide.horizontal {
+  height: 1px;
+  width: 100vw;
+  box-shadow: 0 0 0 1px rgba(255, 107, 53, 0.3);
+  cursor: ns-resize;
+}
+
+.pixel-ruler.alignment-guide.vertical {
+  width: 1px;
+  height: 100vh;
+  box-shadow: 0 0 0 1px rgba(255, 107, 53, 0.3);
+  cursor: ew-resize;
+}
+
+/* Grid Overlay */
+.pixel-ruler.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(rgba(0, 120, 204, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 120, 204, 0.1) 1px, transparent 1px);
+  background-size: 10px 10px;
+  pointer-events: none;
+  z-index: 2147483645;
+  opacity: 0.5;
+}
+
+/* Tooltip */
+.pixel-ruler.tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.3;
+  z-index: 2147483647;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.pixel-ruler.tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 8px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(0, 0, 0, 0.9);
+}
+
+/* Measurement Line */
+.pixel-ruler.measure-line {
+  position: fixed;
+  background: #ff6b35;
+  height: 2px;
+  z-index: 2147483646;
+  pointer-events: none;
+  display: none;
+  box-shadow: 0 0 0 1px rgba(255, 107, 53, 0.5);
+}
+
+.pixel-ruler.measure-line::before {
+  content: attr(data-measurement);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* Crosshair cursor for measure mode */
+body[data-measure-mode="true"] {
+  cursor: crosshair !important;
+}
+
+body[data-measure-mode="true"] * {
+  cursor: crosshair !important;
+}
+
+/* Element highlighting on hover */
+.pixel-ruler-highlight {
+  position: absolute;
+  border: 2px solid #007acc;
+  background: rgba(0, 120, 204, 0.1);
+  pointer-events: none;
+  z-index: 2147483646;
+  box-shadow: 0 0 0 1px rgba(0, 120, 204, 0.3);
+}
+
+/* Guide creation hints */
+.pixel-ruler.creation-hint {
+  position: fixed;
+  background: rgba(0, 120, 204, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  z-index: 2147483647;
+  pointer-events: none;
+}
+
+/* Ruler corner intersection */
+.pixel-ruler.corner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid #007acc;
+  border-right: 1px solid #007acc;
+  z-index: 2147483647;
+  backdrop-filter: blur(8px);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .pixel-ruler.horizontal-ruler,
+  .pixel-ruler.vertical-ruler {
+    display: none;
+  }
+  
+  .pixel-ruler.tooltip {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .pixel-ruler.alignment-guide {
+    opacity: 0.6;
+  }
+  
+  .pixel-ruler.alignment-guide:hover {
+    opacity: 0.9;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .pixel-ruler.horizontal-ruler,
+  .pixel-ruler.vertical-ruler {
+    background: white;
+    border-color: #000;
+  }
+  
+  .pixel-ruler .ruler-mark {
+    background: #000;
+  }
+  
+  .pixel-ruler.alignment-guide {
+    background: #ff0000;
+  }
+  
+  .pixel-ruler.tooltip {
+    background: #000;
+    border: 1px solid #fff;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .pixel-ruler.alignment-guide {
+    transition: none;
+  }
+}
+
+/* Print styles - hide rulers when printing */
+@media print {
+  .pixel-ruler-container,
+  .pixel-ruler {
+    display: none !important;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .pixel-ruler.horizontal-ruler,
+  .pixel-ruler.vertical-ruler {
+    background: rgba(40, 40, 40, 0.95);
+    border-color: #4fc3f7;
+  }
+  
+  .pixel-ruler .ruler-mark {
+    background: #ccc;
+  }
+  
+  .pixel-ruler .ruler-mark.major {
+    background: #fff;
+  }
+  
+  .pixel-ruler .ruler-mark.minor {
+    background: #4fc3f7;
+  }
+  
+  .pixel-ruler .ruler-mark.minor::after {
+    color: #fff;
+  }
+}
+
+/* Animation for guide creation */
+@keyframes guideCreated {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+.pixel-ruler.alignment-guide.newly-created {
+  animation: guideCreated 0.5s ease-out;
+}
+
+/* Snap indicators */
+.pixel-ruler.snap-indicator {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #4fc3f7;
+  border: 2px solid white;
+  border-radius: 50%;
+  z-index: 2147483647;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Selection outline for active guide */
+.pixel-ruler.alignment-guide.selected {
+  box-shadow: 0 0 0 2px #4fc3f7, 0 0 0 4px rgba(79, 195, 247, 0.3);
+}
+
+/* Temporary message animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.pixel-ruler.temp-message {
+  animation: fadeInOut 0.3s ease-in-out;
+}

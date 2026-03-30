@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Ruler + Alignment Checker — Chrome Extension</title>
+  <meta name="description" content="Professional on-screen ruler, alignment guides & measurement tools for pixel-perfect web design. Free + Premium features. No tracking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .ext-hero { padding: 140px 0 60px; }
+    .ext-hero-inner { display: flex; align-items: center; gap: 48px; }
+    .ext-hero-icon { flex-shrink: 0; width: 120px; height: 120px; background: linear-gradient(135deg, #1e3a5f, #0d47a1); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; font-size: 56px; box-shadow: 0 12px 40px rgba(13, 71, 161, 0.3); }
+    .ext-hero-text h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .ext-hero-text p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px; }
+    .ext-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .version-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--green); }
+    .feature-showcase { padding: 60px 0; }
+    .feature-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); transition: border-color var(--transition-smooth); }
+    .feature-list li:hover { border-color: rgba(99, 102, 241, 0.2); }
+    .feature-list .fi { flex-shrink: 0; width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .feature-list .ft h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 2px; }
+    .feature-list .ft p { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4; }
+    .shortcuts-section { padding: 40px 0; }
+    .shortcuts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .shortcut { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); }
+    .shortcut .action { font-size: 0.9rem; color: var(--text-secondary); }
+    .shortcut kbd { padding: 4px 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.82rem; font-weight: 600; font-family: var(--font-body); color: var(--text-primary); }
+    .pricing-section { padding: 60px 0; text-align: center; }
+    .price-card { display: inline-block; background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: var(--radius-xl); padding: 40px 48px; box-shadow: var(--accent-glow); }
+    .price-amount { font-size: 3rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .price-label { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+    .price-note { color: var(--text-secondary); font-size: 0.88rem; margin-top: 16px; }
+    @media (max-width: 768px) {
+      .ext-hero-inner { flex-direction: column; text-align: center; }
+      .ext-hero-actions { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="../" class="navbar-brand"><span class="logo-icon">⚡</span><span>Atul's Extensions</span></a>
+      <ul class="navbar-links">
+        <li><a href="../#extensions">All Extensions</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="ext-hero">
+    <div class="container">
+      <a href="../" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to all extensions
+      </a>
+      <div class="ext-hero-inner">
+        <div class="ext-hero-icon">📏</div>
+        <div class="ext-hero-text">
+          <div class="version-pill">v1.0.0 • Manifest V3</div>
+          <h1>Pixel Ruler + Alignment Checker</h1>
+          <p>Professional on-screen rulers and alignment guides for perfect element positioning on any webpage. Designed for developers and designers who care about pixel-perfect precision.</p>
+          <div class="ext-hero-actions">
+            <a href="#pricing" class="btn btn-primary">Get Premium — $1.00</a>
+            <a href="privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
+            <a href="terms-of-service.html" class="btn btn-ghost">Terms</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-showcase" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Features</h2>
+        <p>Everything you need for pixel-perfect alignment on the web</p>
+      </div>
+      <ul class="feature-list">
+        <li>
+          <div class="fi" style="background: rgba(59, 130, 246, 0.1);">📏</div>
+          <div class="ft"><h4>Pixel-Perfect Rulers</h4><p>Horizontal and vertical rulers with exact pixel markings that overlay on any webpage.</p></div>
+        </li>
+        <li>
+          <div class="fi" style="background: rgba(139, 92, 246, 0.1);">📐</div>
+          <div class="ft"><h4>Draggable Guides</h4><p>Create and position vertical/horizontal alignment guides with double-click. Drag to reposition.</p></div>
+        </li>
+        <li>
+          <div class="fi" style="background: rgba(16, 185, 129, 0.1);">📐</div>
+          <div class="ft"><h4>Measurement Tool</h4><p>Click and drag between any two points to measure distances. Live distance display in pixels.</p></div>
+        </li>
+        <li>
+          <div class="fi" style="background: rgba(245, 158, 11, 0.1);">🔍</div>
+          <div class="ft"><h4>Element Inspector</h4><p>Hover over elements to see dimensions, position, and CSS properties in real-time.</p></div>
+        </li>
+        <li>
+          <div class="fi" style="background: rgba(236, 72, 153, 0.1);">🔲</div>
+          <div class="ft"><h4>Background Grid</h4><p>Toggle a customizable pixel grid overlay (5px, 10px, 20px, 25px) for precise positioning.</p></div>
+        </li>
+        <li>
+          <div class="fi" style="background: rgba(99, 102, 241, 0.1);">🎨</div>
+          <div class="ft"><h4>Custom Colors</h4><p>Adjust ruler and guide colors to match your design or stand out on any background.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="shortcuts-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>⌨️ Keyboard Shortcuts</h2>
+        <p>Professional workflow at your fingertips</p>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut"><span class="action">Toggle Rulers</span><kbd>Ctrl+Shift+R</kbd></div>
+        <div class="shortcut"><span class="action">Toggle Guides</span><kbd>Ctrl+Shift+G</kbd></div>
+        <div class="shortcut"><span class="action">Clear All Guides</span><kbd>Ctrl+Shift+C</kbd></div>
+        <div class="shortcut"><span class="action">Measure Mode</span><kbd>Ctrl+M</kbd></div>
+        <div class="shortcut"><span class="action">Exit Measure</span><kbd>Escape</kbd></div>
+        <div class="shortcut"><span class="action">Create Guide</span><kbd>Double-click</kbd></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2>Simple, One-Time Pricing</h2>
+        <p>No subscriptions. No recurring fees. Pay once, unlock forever.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-amount">$1.00</div>
+        <div class="price-label">One-time payment • Lifetime access</div>
+        <p class="price-note">🇮🇳 ₹99 for Indian users via Razorpay (UPI, Card, Netbanking)</p>
+        <p class="price-note">🌍 PayPal for international payments</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">⚡ Pixel Ruler by Atul</div>
+        <ul class="footer-links">
+          <li><a href="../">Home</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms</a></li>
+          <li><a href="https://github.com/atul0016" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.feature-list li, .shortcut, .price-card').forEach(el => {
+      el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

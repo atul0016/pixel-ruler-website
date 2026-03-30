@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Generator - Pixel Ruler Extension</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .icon-container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .icon-preview {
+      display: inline-block;
+      margin: 10px;
+      text-align: center;
+    }
+    
+    .icon-preview img {
+      display: block;
+      margin: 0 auto 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .size-label {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    .instructions {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    
+    .instructions h3 {
+      margin-top: 0;
+      color: #1976d2;
+    }
+    
+    .instructions ol {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .code {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    
+    canvas {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .download-btn {
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 12px;
+      cursor: pointer;
+      margin: 4px;
+    }
+    
+    .download-btn:hover {
+      background: #005a9e;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔧 Pixel Ruler Extension - Icon Generator</h1>
+  
+  <div class="instructions">
+    <h3>📋 How to Generate Icons</h3>
+    <p>Follow these steps to create the required PNG icons for your Chrome extension:</p>
+    <ol>
+      <li><strong>Online SVG to PNG Converter:</strong>
+        <ul>
+          <li>Visit <a href="https://convertio.co/svg-png/" target="_blank">Convertio</a> or <a href="https://cloudconvert.com/svg-to-png" target="_blank">CloudConvert</a></li>
+          <li>Upload the <code>icon.svg</code> file from this folder</li>
+          <li>Generate PNG files at these exact sizes: <strong>16x16</strong>, <strong>48x48</strong>, and <strong>128x128</strong> pixels</li>
+        </ul>
+      </li>
+      
+      <li><strong>Using Figma/Adobe Illustrator:</strong>
+        <ul>
+          <li>Import the SVG file</li>
+          <li>Export as PNG at the required sizes</li>
+          <li>Make sure to maintain the aspect ratio</li>
+        </ul>
+      </li>
+      
+      <li><strong>Using Command Line (ImageMagick):</strong></li>
+    </ol>
+    
+    <div class="code">
+# Install ImageMagick first
+# Convert SVG to required PNG sizes
+magick icon.svg -resize 16x16 icon16.png
+magick icon.svg -resize 48x48 icon48.png  
+magick icon.svg -resize 128x128 icon128.png
+    </div>
+    
+    <li><strong>Manual Creation with Canvas (below):</strong> Use the interactive generator below</li>
+  </div>
+
+  <div class="icon-container">
+    <h3>🎨 Interactive Icon Generator</h3>
+    <p>Click the buttons below to generate and download icon files:</p>
+    
+    <div id="canvasContainer">
+      <!-- Canvas elements will be generated here -->
+    </div>
+    
+    <div>
+      <button class="download-btn" onclick="generateIcon(16)">Generate 16x16</button>
+      <button class="download-btn" onclick="generateIcon(48)">Generate 48x48</button>
+      <button class="download-btn" onclick="generateIcon(128)">Generate 128x128</button>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <h3>📁 Required Files</h3>
+    <p>Your <code>icons/</code> folder should contain these files when complete:</p>
+    <div class="code">
+icons/
+├── icon16.png   (16x16 pixels)
+├── icon48.png   (48x48 pixels)  
+├── icon128.png  (128x128 pixels)
+└── icon.svg     (source file)
+    </div>
+  </div>
+
+  <div class="instructions">
+    <h3>🎯 Icon Design Guidelines</h3>
+    <ul>
+      <li><strong>Style:</strong> Clean, modern, recognizable as a ruler tool</li>
+      <li><strong>Colors:</strong> Primary blue (#007acc), accent orange (#ff6b35)</li>
+      <li><strong>Elements:</strong> Rulers, grid lines, measurement indicators</li>
+      <li><strong>Background:</strong> Solid color or subtle gradient</li>
+      <li><strong>Visibility:</strong> Must be clear at 16px size</li>
+    </ul>
+  </div>
+
+  <script>
+    function generateIcon(size) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      canvas.width = size;
+      canvas.height = size;
+      
+      // Draw icon based on size
+      drawIcon(ctx, size);
+      
+      // Create download link
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `icon${size}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+      
+      // Show preview
+      showPreview(canvas, size);
+    }
+    
+    function drawIcon(ctx, size) {
+      // Scale factors
+      const scale = size / 128;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, size, size);
+      
+      // Draw background circle
+      ctx.fillStyle = '#007acc';
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, (58 * scale), 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw border
+      ctx.strokeStyle = '#005a9e';
+      ctx.lineWidth = 4 * scale;
+      ctx.stroke();
+      
+      // Draw rulers
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      
+      // Horizontal ruler
+      ctx.fillRect(20 * scale, 35 * scale, 88 * scale, 8 * scale);
+      
+      // Vertical ruler  
+      ctx.fillRect(35 * scale, 20 * scale, 8 * scale, 88 * scale);
+      
+      // Draw ruler marks (simplified for small sizes)
+      if (size >= 48) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        
+        // Horizontal marks
+        for (let x = 30; x <= 90; x += 10) {
+          ctx.fillRect(x * scale, 37 * scale, 1 * scale, 4 * scale);
+        }
+        
+        // Vertical marks
+        for (let y = 30; y <= 90; y += 10) {
+          ctx.fillRect(37 * scale, y * scale, 4 * scale, 1 * scale);
+        }
+      }
+      
+      // Draw guide lines
+      if (size >= 32) {
+        ctx.strokeStyle = '#ff6b35';
+        ctx.lineWidth = 2 * scale;
+        ctx.globalAlpha = 0.8;
+        
+        ctx.beginPath();
+        ctx.moveTo(55 * scale, 50 * scale);
+        ctx.lineTo(55 * scale, 95 * scale);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(50 * scale, 75 * scale);
+        ctx.lineTo(95 * scale, 75 * scale);
+        ctx.stroke();
+        
+        ctx.globalAlpha = 1;
+      }
+      
+      // Draw corner indicator
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.fillRect(35 * scale, 35 * scale, 8 * scale, 8 * scale);
+      
+      // Draw pixel indicator
+      if (size >= 24) {
+        ctx.fillStyle = '#4fc3f7';
+        ctx.beginPath();
+        ctx.arc(75 * scale, 65 * scale, 3 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(75 * scale, 65 * scale, 1 * scale, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    function showPreview(canvas, size) {
+      const container = document.getElementById('canvasContainer');
+      const preview = document.createElement('div');
+      preview.className = 'icon-preview';
+      
+      const img = canvas.cloneNode(true);
+      img.style.width = size < 48 ? '48px' : size + 'px';
+      img.style.height = size < 48 ? '48px' : size + 'px';
+      img.style.imageRendering = size <= 16 ? 'pixelated' : 'auto';
+      
+      const label = document.createElement('div');
+      label.className = 'size-label';
+      label.textContent = `${size}x${size}`;
+      
+      preview.appendChild(img);
+      preview.appendChild(label);
+      container.appendChild(preview);
+    }
+  </script>
+</body>
+</html>

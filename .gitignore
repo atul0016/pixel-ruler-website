@@ -1,23 +1,16 @@
-
-
 # AI/editor config
 .github/
 .vscode/
+.codacy/
 
 # Playwright dev artifacts
 .playwright-mcp/
-
-# Nested git repo (separate project)
-advanced-smart-capture/
-
-# Payment page - was ignored but now safe since secrets are in environment variables
-# pay.html
 
 # Build artifacts
 *.zip
 *.crx
 
-# Workflow docs
+# Workflow docs (internal only)
 PRIVACY-SETUP.md
 PUBLICATION-CHECKLIST.md
 
@@ -25,6 +18,9 @@ PUBLICATION-CHECKLIST.md
 .DS_Store
 Thumbs.db
 
-# Editor
-.vscode/
+# Environment
+.env
 
+# Old standalone privacy pages (replaced by pixel-ruler/ and smart-capture/ folders)
+pixel-ruler-privacy.html
+smart-capture-privacy.html
