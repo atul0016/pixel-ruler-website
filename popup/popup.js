@@ -13,6 +13,8 @@ class PopupController {
       showGrid: false,
       measureMode: false
     };
+    this.PAYMENT_URL = 'https://rulerguide.netlify.app/pay.html';
+    this.INSTALL_ID_KEY = 'pixelRulerInstallId';
     
     // *** IMPORTANT: Replace with YOUR Netlify function URL after deploy ***
     this.VERIFY_URL = 'https://rulerguide.netlify.app/.netlify/functions/verify';
@@ -640,11 +642,26 @@ class PopupController {
     setTimeout(() => this.openPaymentPage(), 800);
   }
 
-  openPaymentPage() {
-    // Open the hosted payment page in a new tab
-    // After deploying to GitHub Pages, this URL will work:
-    const payUrl = 'https://atul0016.github.io/pixel-ruler-website/pay.html';
-    chrome.tabs.create({ url: payUrl });
+  async getOrCreateInstallId() {
+    const result = await chrome.storage.local.get([this.INSTALL_ID_KEY]);
+    if (result[this.INSTALL_ID_KEY]) {
+      return result[this.INSTALL_ID_KEY];
+    }
+
+    const installId = (crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+
+    await chrome.storage.local.set({ [this.INSTALL_ID_KEY]: installId });
+    return installId;
+  }
+
+  async openPaymentPage() {
+    const installId = await this.getOrCreateInstallId();
+    const url = new URL(this.PAYMENT_URL);
+    url.searchParams.set('ext', 'pixel-ruler');
+    url.searchParams.set('installId', installId);
+    chrome.tabs.create({ url: url.toString() });
   }
 
   listenForPaymentSuccess() {

@@ -290,12 +290,27 @@ console.log('Pixel Ruler background script loaded');
 // When the payment page (pay.html) completes, it sets #payment-success in the URL.
 // We detect this and activate premium.
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.url && changeInfo.url.includes('pay.html#payment-success')) {
-    console.log('💎 Payment success detected! Activating premium...');
-    await chrome.storage.local.set({ premiumActive: true });
-    // Optionally close the payment tab after a short delay
-    setTimeout(() => {
-      chrome.tabs.remove(tabId).catch(() => {});
-    }, 3000);
+  if (!changeInfo.url) return;
+
+  let parsed;
+  try {
+    parsed = new URL(changeInfo.url);
+  } catch {
+    return;
   }
+
+  if (!parsed.hash.startsWith('#payment-success')) return;
+
+  // Supports both old hash (#payment-success) and new hash (#payment-success&ext=pixel-ruler)
+  const rawHashParams = parsed.hash.replace('#payment-success', '').replace(/^&/, '');
+  const hashParams = new URLSearchParams(rawHashParams);
+  const ext = hashParams.get('ext') || parsed.searchParams.get('ext') || 'pixel-ruler';
+
+  if (ext !== 'pixel-ruler') return;
+
+  console.log('💎 Payment success detected! Activating premium...');
+  await chrome.storage.local.set({ premiumActive: true });
+  setTimeout(() => {
+    chrome.tabs.remove(tabId).catch(() => {});
+  }, 3000);
 });
