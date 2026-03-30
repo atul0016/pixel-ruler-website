@@ -10,8 +10,8 @@
 # Nested git repo (separate project)
 advanced-smart-capture/
 
-# Payment page - contains live PayPal client-id
-pay.html
+# Payment page - was ignored but now safe since secrets are in environment variables
+# pay.html
 
 # Build artifacts
 *.zip
